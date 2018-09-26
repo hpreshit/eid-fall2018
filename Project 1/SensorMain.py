@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore, QtGui
 
 from PyQt5.QtWidgets import QDialog, QApplication
 
@@ -25,17 +25,17 @@ class Main(QDialog):
             self.ui.temperatureDisplay.setText("")
             self.ui.humidityDisplay.setText("")
         else:
-            temperature = '{0:.2f}'.format(temperature)
-            self.ui.temperatureDisplay.setText(temperature)
-            humidity = '{0:.2f}'.format(humidity)
-            self.ui.humidityDisplay.setText(humidity)
+            temp = '{0:.2f}'.format(temperature)
+            self.ui.temperatureDisplay.setText(temp)
+            hum = '{0:.2f}'.format(humidity)
+            self.ui.humidityDisplay.setText(hum)
             #Set an alert for high temperautre
             if temperature > 26:
                 self.ui.alertDisplay.setText("HIGH TEMPERATURE")
             else:
                 self.ui.alertDisplay.setText("")
 
-        newtime = time.strfttime('%m-%d-%y  %H:%M:%S')
+        newtime = time.strftime('%m-%d-%y  %H:%M:%S')
         self.ui.timeDisplay.setText(newtime)
 
 
