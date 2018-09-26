@@ -10,28 +10,39 @@ import Adafruit_DHT
 
 import time
 
-class AppWindow(QDialog):
+class Main(QDialog):
     def __init__(self):
-        super().__init__()
+        super(Main,self).__init__()
         self.ui = Ui_Form()
-
+        self.ui.setupUi(self)
+        self.ui.refreshButton.clicked.connect(self.getTempHum)
 
     def getTempHum(self):
-        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4))
+        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 
         if humidity is None and temperature is None:
-            self.alertDisplay.setText("Sensor Disconnected")
-            Self.temperatureDisplay.setText("")
+            self.ui.alertDisplay.setText("Sensor Disconnected")
+            self.ui.temperatureDisplay.setText("")
+            self.ui.humidityDisplay.setText("")
+        else:
+            temperature = '{0:.2f}'.format(temperature)
+            self.ui.temperatureDisplay.setText(temperature)
+            humidity = '{0:.2f}'.format(humidity)
+            self.ui.humidityDisplay.setText(humidity)
+            #Set an alert for high temperautre
+            if temperature > 26:
+                self.ui.alertDisplay.setText("HIGH TEMPERATURE")
+            else:
+                self.ui.alertDisplay.setText("")
 
-
+        newtime = time.strfttime('%m-%d-%y  %H:%M:%S')
+        self.ui.timeDisplay.setText(newtime)
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    window  = QtWidgets.QDialog()
-    ui = Ui_Form()
-    ui.setupUi(window)
-    window.show()
+    ui = Main()
+    ui.show()
     sys.exit(app.exec_())
 

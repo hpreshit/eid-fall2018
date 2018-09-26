@@ -13,26 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLCDNumber" name="temperatureDisplay">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>280</y>
-     <width>191</width>
-     <height>61</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLCDNumber" name="humidityDisplay">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>280</y>
-     <width>191</width>
-     <height>61</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="refreshButton">
    <property name="geometry">
     <rect>
@@ -149,6 +129,26 @@
    </property>
    <property name="pixmap">
     <pixmap>../../../Downloads/rsz_alert.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="temperatureDisplay">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>280</y>
+     <width>191</width>
+     <height>61</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="humidityDisplay">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>280</y>
+     <width>191</width>
+     <height>61</height>
+    </rect>
    </property>
   </widget>
  </widget>
