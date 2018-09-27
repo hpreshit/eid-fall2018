@@ -21,17 +21,17 @@ class Main(QDialog):
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 
         if humidity is None and temperature is None:
-            self.ui.alertDisplay.setText("Sensor Disconnected")
-            self.ui.temperatureDisplay.setText("")
-            self.ui.humidityDisplay.setText("")
+            self.ui.alertDisplay.setText(" SENSOR DISCONNECTED")
+            self.ui.temperatureDisplay.display("")
+            self.ui.humidityDisplay.display("")
         else:
             temp = '{0:.2f}'.format(temperature)
-            self.ui.temperatureDisplay.setText(temp)
+            self.ui.temperatureDisplay.display(temp)
             hum = '{0:.2f}'.format(humidity)
-            self.ui.humidityDisplay.setText(hum)
+            self.ui.humidityDisplay.display(hum)
             #Set an alert for high temperautre
             if temperature > 26:
-                self.ui.alertDisplay.setText("HIGH TEMPERATURE")
+                self.ui.alertDisplay.setText("    HIGH TEMPERATURE")
             else:
                 self.ui.alertDisplay.setText("")
 
