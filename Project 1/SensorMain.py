@@ -16,8 +16,13 @@ class Main(QDialog):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.ui.refreshButton.clicked.connect(self.getTempHum)
+        self.ui.celciusButton.clicked.connect(self.celciusTemp)
+        self.ui.fahrenheitButton.clicked.connect(self.fahrenheitTemp)
+        global unit
+        unit = 1
 
     def getTempHum(self):
+        global unit
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 
         if humidity is None and temperature is None:
@@ -25,6 +30,8 @@ class Main(QDialog):
             self.ui.temperatureDisplay.display("")
             self.ui.humidityDisplay.display("")
         else:
+            if unit == 0:
+                temperature = (temperature*1.8) + 32
             temp = '{0:.2f}'.format(temperature)
             self.ui.temperatureDisplay.display(temp)
             hum = '{0:.2f}'.format(humidity)
@@ -38,6 +45,17 @@ class Main(QDialog):
         newtime = time.strftime('%m-%d-%y  %H:%M:%S')
         self.ui.timeDisplay.setText(newtime)
 
+    def celciusTemp(self):
+        global unit
+        if unit == 0:
+            unit = 1
+        self.getTempHum()
+
+    def fahrenheitTemp(self):
+        global unit
+        if unit == 1:
+            unit = 0
+        self.getTempHum()
 
 if __name__ == "__main__":
     import sys
