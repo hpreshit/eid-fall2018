@@ -60,7 +60,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Downloads/rsz_2temperature.png</pixmap>
+    <pixmap>Icons/temperature.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="humidityLabel">
@@ -76,7 +76,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Downloads/rsz_1humidity.png</pixmap>
+    <pixmap>Icons/humidity.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="timeLabel">
@@ -92,7 +92,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Downloads/rsz_1rsz_clock (1).png</pixmap>
+    <pixmap>Icons/clock.png</pixmap>
    </property>
   </widget>
   <widget class="QLineEdit" name="timeDisplay">
@@ -144,7 +144,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Downloads/rsz_alert.png</pixmap>
+    <pixmap>Icons/alert.png</pixmap>
    </property>
   </widget>
   <widget class="QLCDNumber" name="temperatureDisplay">
@@ -245,7 +245,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Downloads/rsz_rsz_2temperature.png</pixmap>
+    <pixmap>Icons/temperatureAverage.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="avgLabel1">
@@ -280,7 +280,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Downloads/rsz_rsz_1humidity.png</pixmap>
+    <pixmap>Icons/humidityAverage.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="avgLabel2">
@@ -320,6 +320,19 @@
      <width>101</width>
      <height>51</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="resetButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>380</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>R</string>
    </property>
   </widget>
  </widget>

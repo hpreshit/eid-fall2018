@@ -29,7 +29,8 @@ class Main(QDialog):
         self.ui.fahrenheitButton.clicked.connect(self.fahrenheitTemp)
         self.ui.timerStartButton.clicked.connect(self.timerStart)
         self.ui.timerStopButton.clicked.connect(self.timerStop)
-
+        self.ui.resetButton.clicked.connect(self.resetAvg)
+        
     def getTempHum(self):
         global unit, count, tempAvg, humAvg
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
@@ -84,6 +85,12 @@ class Main(QDialog):
 
     def timerStop(self):
         self.timer.stop()
+        
+    def resetAvg(self):
+        global tempAvg, tempHum, count
+        tempAvg, tempHum, count = 0, 0, 0
+        self.ui.temperatureAvgDisplay.display("")
+        self.ui.humidityAvgDisplay.display("")
 
 if __name__ == "__main__":
     import sys
