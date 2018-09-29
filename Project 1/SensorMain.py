@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QDialog, QApplication
 
 from SensorUI import Ui_SensorInterface
 
+import matplotlib.pyplot as plt
+
 import Adafruit_DHT
 
 import time
@@ -16,9 +18,11 @@ class Main(QDialog):
         self.ui = Ui_SensorInterface()
         self.ui.setupUi(self)
         
-        global unit, count, tempAvg, humAvg
+        global unit, count, tempAvg, humAvg, samples, tempArr, humArr 
         unit = 1
-        count,tempAvg,humAvg = 0,0,0
+        count,tempAvg,humAvg,samples = 0,0,0,0
+        tempArr = [None]*10  
+        humArr = [None]*10 
 
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(5000)
@@ -30,9 +34,11 @@ class Main(QDialog):
         self.ui.timerStartButton.clicked.connect(self.timerStart)
         self.ui.timerStopButton.clicked.connect(self.timerStop)
         self.ui.resetButton.clicked.connect(self.resetAvg)
+        self.ui.graphTempButton.clicked.connect(self.graphTemp)
+        self.ui.graphHumButton.clicked.connect(self.graphHum)
         
     def getTempHum(self):
-        global unit, count, tempAvg, humAvg
+        global unit, count, tempAvg, humAvg, tempArr, humArr, samples
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
         threshold = 27
 
@@ -46,7 +52,7 @@ class Main(QDialog):
             count = count + 1
             if unit == 0:
                 temperature = (temperature*1.8) + 32
-                threshold = 80.6
+                threshold = 80.6    
             temp = '{0:.2f}'.format(temperature)
             self.ui.temperatureDisplay.display(temp)
             hum = '{0:.2f}'.format(humidity)
@@ -64,10 +70,40 @@ class Main(QDialog):
             humAvg=((humAvg * (count-1)) + humidity) / count
             hum = '{0:.2f}'.format(humAvg)
             self.ui.humidityAvgDisplay.display(hum)
+            if unit == 1:
+                tempArr[samples]=temperature
+                humArr[samples]=humidity
+                samples = samples + 1
+                if samples == 10:
+                    samples=0
 
         newtime = time.strftime('%m-%d-%y  %H:%M:%S')
         self.ui.timeDisplay.setText(newtime)
 
+    def graphTemp(self):
+        global tempArr
+        y = [1,2,3,4,5,6,7,8,9,10]
+        
+        plt.plot(y, tempArr, label='Temperature')
+        
+        plt.xlabel('Sample Number')
+        plt.ylabel('Degree Celcius')
+        plt.title('Temperature Plot of last 10 Readings')
+        plt.legend()
+        plt.show()
+        
+    def graphHum(self):
+        global humArr
+        y = [1,2,3,4,5,6,7,8,9,10]
+        
+        plt.plot(y, humArr, label='Humidity')
+        
+        plt.xlabel('Sample Number')
+        plt.ylabel('Percent Humidity')
+        plt.title('Humidity Plot of last 10 Readings')
+        plt.legend()
+        plt.show()
+        
     def celciusTemp(self):
         global unit
         if unit == 0:
