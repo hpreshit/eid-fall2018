@@ -143,6 +143,9 @@
      <family>Sans Serif</family>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="alertDisplay">
    <property name="geometry">
@@ -165,7 +168,7 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">color: rgb(255, 255, 255);</string>
    </property>
   </widget>
   <widget class="QLabel" name="alertLabel">
@@ -187,7 +190,7 @@
   <widget class="QLCDNumber" name="temperatureDisplay">
    <property name="geometry">
     <rect>
-     <x>620</x>
+     <x>50</x>
      <y>180</y>
      <width>181</width>
      <height>81</height>
@@ -200,7 +203,7 @@
   <widget class="QLCDNumber" name="humidityDisplay">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>620</x>
      <y>180</y>
      <width>181</width>
      <height>81</height>
@@ -213,7 +216,7 @@
   <widget class="QPushButton" name="celciusButton">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>18</x>
      <y>180</y>
      <width>31</width>
      <height>31</height>
@@ -229,7 +232,7 @@
   <widget class="QPushButton" name="fahrenheitButton">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>18</x>
      <y>230</y>
      <width>31</width>
      <height>31</height>

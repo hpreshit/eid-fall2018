@@ -18,9 +18,9 @@ class Main(QDialog):
         self.ui = Ui_SensorInterface()
         self.ui.setupUi(self)
         
-        global unit, count, tempAvg, humAvg, samples, tempArr, humArr 
+        global unit, count, tempAvg, humAvg, samples, tempArr, humArr, timerflag 
         unit = 1
-        count,tempAvg,humAvg,samples = 0,0,0,0
+        count,tempAvg,humAvg,samples,timerflag = 0,0,0,0,0
         tempArr = [None]*10  
         humArr = [None]*10 
 
@@ -31,8 +31,7 @@ class Main(QDialog):
         self.ui.refreshButton.clicked.connect(self.getTempHum)
         self.ui.celciusButton.clicked.connect(self.celciusTemp)
         self.ui.fahrenheitButton.clicked.connect(self.fahrenheitTemp)
-        self.ui.timerStartButton.clicked.connect(self.timerStart)
-        self.ui.timerStopButton.clicked.connect(self.timerStop)
+        self.ui.timerButton.clicked.connect(self.timerStartStop)
         self.ui.resetButton.clicked.connect(self.resetAvg)
         self.ui.graphTempButton.clicked.connect(self.graphTemp)
         self.ui.graphHumButton.clicked.connect(self.graphHum)
@@ -116,11 +115,16 @@ class Main(QDialog):
             unit = 0
         self.getTempHum()
 
-    def timerStart(self):
-        self.timer.start()
-
-    def timerStop(self):
-        self.timer.stop()
+    def timerStartStop(self):
+        global timerflag
+        if timerflag == 0:
+            self.ui.timerStatus.setStyleSheet.backgroundcolor(green);        
+            self.timer.start()
+            timerflag = 1
+        elif timerflag == 1:
+            self.ui.timerStatus.setStyleSheet.backgroundcolor(red);
+            self.timer.stop()
+            timerflag = 0
         
     def resetAvg(self):
         global tempAvg, tempHum, count
