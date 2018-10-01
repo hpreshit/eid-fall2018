@@ -23,5 +23,5 @@
          python3 SensorMain.py
       
    #### After you run the Python file, you will get a UI like this:
-   [GitHub Logo](SensorUI.JPG)
+![GitHub Logo](SensorUI.JPG)
    
