@@ -2,6 +2,7 @@
    
    ### Created By: Preshit Harlikar
   
+  ![GitHub Logo](SensorUI.JPG)
   
    #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT.
    
@@ -21,7 +22,5 @@
    #### Clone this repository and run the program
          git clone https://github.com/hpreshit/eid-fall2018 && cd Project\ 1/
          python3 SensorMain.py
-      
-   #### After you run the Python file, you will get a UI like this:
-![GitHub Logo](SensorUI.JPG)
+ 
    
