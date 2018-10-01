@@ -35,6 +35,6 @@
    #### 1. Retrieve temperature and humidity values using a timer
    #### 2. Continuously calculate and display the average temperature & humidity values
    #### 3. Switch between Celcius and Fahrenheit units of temperature
-   #### 4. Allow user to set an alarm for an input high or low temperature or humidity value using a dial
+   #### 4. Allow user to set an alarm for an input high temperature and humidity value using a dial
    #### 5. Display graph of last 10 values of temperature and humidity values
    
