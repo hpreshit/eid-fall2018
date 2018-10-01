@@ -18,12 +18,13 @@ class Main(QDialog):
         self.ui = Ui_SensorInterface()
         self.ui.setupUi(self)
         
-        global unit, count, tempAvg, humAvg, samples, tempArr, humArr, timerflag 
+        global unit, count, tempAvg, humAvg, samples, tempArr, humArr, timerflag, tempLimit, humLimit 
         unit = 1
         count,tempAvg,humAvg,samples,timerflag = 0,0,0,0,0
         tempArr = [None]*10  
         humArr = [None]*10 
-
+        tempLimit = 26
+        humLimit = 40
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(5000)
         self.timer.timeout.connect(self.getTempHum)
@@ -35,11 +36,12 @@ class Main(QDialog):
         self.ui.resetButton.clicked.connect(self.resetAvg)
         self.ui.graphTempButton.clicked.connect(self.graphTemp)
         self.ui.graphHumButton.clicked.connect(self.graphHum)
+        self.ui.tempDial.valueChanged.connect(self.setTempLimit)
+        self.ui.humDial.valueChanged.connect(self.setHumLimit)
         
     def getTempHum(self):
-        global unit, count, tempAvg, humAvg, tempArr, humArr, samples
+        global unit, count, tempAvg, humAvg, tempArr, humArr, samples, tempLimit, humLimit
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
-        threshold = 27
 
         if humidity is None and temperature is None:
             self.ui.alertDisplay.setText(" SENSOR DISCONNECTED")
@@ -47,7 +49,9 @@ class Main(QDialog):
             self.ui.humidityDisplay.display("")
             self.ui.temperatureAvgDisplay.display("")
             self.ui.humidityAvgDisplay.display("")
+            self.ui.sensorStatus.setStyleSheet("background-color: rgb(255, 0, 0);")
         else:
+            self.ui.sensorStatus.setStyleSheet("background-color: rgb(0, 255, 0);")
             count = count + 1
             if unit == 0:
                 temperature = (temperature*1.8) + 32
@@ -58,11 +62,12 @@ class Main(QDialog):
             self.ui.humidityDisplay.display(hum)
             
             #Set an alert for high temperautre
-            if temperature > threshold:
+            if temperature > tempLimit:
                 self.ui.alertDisplay.setText("    HIGH TEMPERATURE")
+            elif humidity > humLimit:
+                self.ui.alertDisplay.setText("        HIGH HUMIDITY")
             else:
                 self.ui.alertDisplay.setText("")
-    
             tempAvg=((tempAvg * (count-1)) + temperature) / count
             temp = '{0:.2f}'.format(tempAvg)
             self.ui.temperatureAvgDisplay.display(temp)
@@ -104,27 +109,42 @@ class Main(QDialog):
         plt.show()
         
     def celciusTemp(self):
-        global unit
+        global unit, tempAvg
         if unit == 0:
             unit = 1
+            tempAvg = (tempAvg-32) * 0.5556
         self.getTempHum()
 
     def fahrenheitTemp(self):
-        global unit
+        global unit, tempAvg
         if unit == 1:
             unit = 0
-        self.getTempHum()
+            tempAvg = (tempAvg*1.8) + 32
+        self.getTempHum()      
 
     def timerStartStop(self):
         global timerflag
         if timerflag == 0:
-            self.ui.timerStatus.setStyleSheet.backgroundcolor(green);        
+            self.ui.timerStatus.setStyleSheet("background-color: rgb(0, 255, 0);");        
             self.timer.start()
             timerflag = 1
         elif timerflag == 1:
-            self.ui.timerStatus.setStyleSheet.backgroundcolor(red);
+            self.ui.timerStatus.setStyleSheet("background-color: rgb(255, 0, 0);");
             self.timer.stop()
             timerflag = 0
+        
+    def setTempLimit(self,value):
+        global tempLimit, unit
+        tempLimit = value
+        if unit == 0:
+            tempLimit = (tempLimit*1.8) + 32
+        self.ui.tempThresholdDisplay.display(tempLimit);
+        
+        
+    def setHumLimit(self,value):
+        global humLimit
+        humLimit = value
+        self.ui.humThresholdDisplay.display(humLimit);
         
     def resetAvg(self):
         global tempAvg, tempHum, count
