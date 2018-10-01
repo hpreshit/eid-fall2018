@@ -23,8 +23,8 @@ class Main(QDialog):
         count,tempAvg,humAvg,samples,timerflag = 0,0,0,0,0
         tempArr = [None]*10  
         humArr = [None]*10 
-        tempLimit = 26
-        humLimit = 40
+        tempLimit = 100
+        humLimit = 100
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(5000)
         self.timer.timeout.connect(self.getTempHum)
