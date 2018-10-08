@@ -15,9 +15,11 @@ import time
 class Main(QDialog):
     def __init__(self):
         super(Main,self).__init__()
-        self.ui = Ui_SensorInterface()
+        #integrating the UI
+        self.ui = Ui_SensorInterface()      
         self.ui.setupUi(self)
         
+        #global variables
         global unit, count, tempAvg, humAvg, samples, tempArr, humArr, timerflag, tempLimit, humLimit 
         unit = 1
         count,tempAvg,humAvg,samples,timerflag = 0,0,0,0,0
@@ -25,6 +27,8 @@ class Main(QDialog):
         humArr = [None]*10 
         tempLimit = 100
         humLimit = 100
+        
+        #initializing timer
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(5000)
         self.timer.timeout.connect(self.getTempHum)
@@ -39,10 +43,12 @@ class Main(QDialog):
         self.ui.tempDial.valueChanged.connect(self.setTempLimit)
         self.ui.humDial.valueChanged.connect(self.setHumLimit)
         
+        #function to get temp and humidity from the sensor
     def getTempHum(self):
         global unit, count, tempAvg, humAvg, tempArr, humArr, samples, tempLimit, humLimit
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 
+        #check if sensor is disconnected
         if humidity is None and temperature is None:
             self.ui.alertDisplay.setText(" SENSOR DISCONNECTED")
             self.ui.temperatureDisplay.display("")
@@ -53,9 +59,13 @@ class Main(QDialog):
         else:
             self.ui.sensorStatus.setStyleSheet("background-color: rgb(0, 255, 0);")
             count = count + 1
+            
+            #conversion from cecius to fahrenheit
             if unit == 0:
                 temperature = (temperature*1.8) + 32
                 threshold = 80.6    
+            
+            #display current temp and humidity value on LCD Display
             temp = '{0:.2f}'.format(temperature)
             self.ui.temperatureDisplay.display(temp)
             hum = '{0:.2f}'.format(humidity)
@@ -68,12 +78,16 @@ class Main(QDialog):
                 self.ui.alertDisplay.setText("        HIGH HUMIDITY")
             else:
                 self.ui.alertDisplay.setText("")
+                
+            #calculating average temperature and humidity continuously for each sample    
             tempAvg=((tempAvg * (count-1)) + temperature) / count
             temp = '{0:.2f}'.format(tempAvg)
             self.ui.temperatureAvgDisplay.display(temp)
             humAvg=((humAvg * (count-1)) + humidity) / count
             hum = '{0:.2f}'.format(humAvg)
             self.ui.humidityAvgDisplay.display(hum)
+            
+            #array for last 10 values of humidity and temperature for graphical display
             if unit == 1:
                 tempArr[samples]=temperature
                 humArr[samples]=humidity
@@ -81,9 +95,11 @@ class Main(QDialog):
                 if samples == 10:
                     samples=0
 
+        #update the time of request for tem and humidity values            
         newtime = time.strftime('%m-%d-%y  %H:%M:%S')
         self.ui.timeDisplay.setText(newtime)
 
+        #function to create a graph of last 10 temperature values
     def graphTemp(self):
         global tempArr
         y = [1,2,3,4,5,6,7,8,9,10]
@@ -96,6 +112,7 @@ class Main(QDialog):
         plt.legend()
         plt.show()
         
+        #function to create a graph of last 10 humidity values
     def graphHum(self):
         global humArr
         y = [1,2,3,4,5,6,7,8,9,10]
@@ -108,6 +125,7 @@ class Main(QDialog):
         plt.legend()
         plt.show()
         
+        #function to switch from fahrenheit to celcius
     def celciusTemp(self):
         global unit, tempAvg
         if unit == 0:
@@ -115,6 +133,7 @@ class Main(QDialog):
             tempAvg = (tempAvg-32) * 0.5556
         self.getTempHum()
 
+        #function to switch from celcius to fahrenheit
     def fahrenheitTemp(self):
         global unit, tempAvg
         if unit == 1:
@@ -122,6 +141,7 @@ class Main(QDialog):
             tempAvg = (tempAvg*1.8) + 32
         self.getTempHum()      
 
+        #function to start and stop the timer to continuously update values
     def timerStartStop(self):
         global timerflag
         if timerflag == 0:
@@ -132,7 +152,8 @@ class Main(QDialog):
             self.ui.timerStatus.setStyleSheet("background-color: rgb(255, 0, 0);");
             self.timer.stop()
             timerflag = 0
-        
+            
+        #function to set the high temperature threshold using dial
     def setTempLimit(self,value):
         global tempLimit, unit
         tempLimit = value
@@ -140,12 +161,13 @@ class Main(QDialog):
             tempLimit = (tempLimit*1.8) + 32
         self.ui.tempThresholdDisplay.display(tempLimit);
         
-        
+        #function to set the high humidity threshold using dial
     def setHumLimit(self,value):
         global humLimit
         humLimit = value
         self.ui.humThresholdDisplay.display(humLimit);
         
+        #function called when reset button is pressed to reset avg values
     def resetAvg(self):
         global tempAvg, tempHum, count
         tempAvg, tempHum, count = 0, 0, 0
