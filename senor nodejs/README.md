@@ -1,2 +1,2 @@
-#### Run the following command
+### Run the following command
      node sensor.js
