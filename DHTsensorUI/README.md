@@ -14,6 +14,12 @@
    ### Some packages have to be installed
          sudo apt-get update
          sudo apt-get install build-essential python-dev python-openssl git
+         
+         npm install socket.io
+         
+         wget -qO- https://deb.nodesource.com/setup_10.x | sudo -E bash -
+         sudo apt-get install -y nodejs
+
    
    ### Now clone the pre-built Adafruit library for DHT22
          git clone https://github.com/adafruit/Adafruit_Python_DHT.git && cd Adafruit_Python_DHT
@@ -52,3 +58,11 @@
    #### 1. Login Screen for client Pi
    #### 2. Display Graph of Temperature and Humidity on Client 
    
+   
+   ## REFERENCES
+   #### 1. https://github.com/jaredwolff/nodejs-websocket-example
+   #### 2. https://os.mbed.com/cookbook/Websockets-Server
+   #### 3. https://www.merixstudio.com/blog/websockets-how-it-works-and-how-use-it/
+   #### 4. https://www.jaredwolff.com/blog/raspberry-pi-getting-interactive-with-your-server-using-websockets/
+   #### 5. https://github.com/jaredwolff/nodejs-websocket-example/blob/master/public/index.html
+   #### 6. https://www.w3schools.com/html/
