@@ -59,7 +59,7 @@
    #### 2. Display Graph of Temperature and Humidity on Client 
    
    
-   ## REFERENCES
+   ## References
    #### 1. https://github.com/jaredwolff/nodejs-websocket-example
    #### 2. https://os.mbed.com/cookbook/Websockets-Server
    #### 3. https://www.merixstudio.com/blog/websockets-how-it-works-and-how-use-it/
