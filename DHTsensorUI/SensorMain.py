@@ -1,3 +1,6 @@
+#Created by - Preshit Harlikar
+#Date - 10/21/2018
+
 import sys
 
 from PyQt5 import QtWidgets, QtCore, QtGui
@@ -72,8 +75,9 @@ class Main(QDialog):
             newtime = time.strftime('%m-%d-%y  %H:%M:%S')
             self.ui.timeDisplay.setText(newtime)
             
+            temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4time = 0,0,0,0,0,0,0,0,0
             #update database
-            crsr.execute("INSERT INTO dht_data values(?,0,0,0,0,0,0,0,0,0)",(newtime))
+            crsr.execute("INSERT INTO dht_data values(?,?,?,?,?,?,?,?,?,?)",(newtime,temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4time))
             connection.commit()
 
         else:
@@ -152,13 +156,13 @@ class Main(QDialog):
                 if samples == 10:
                     samples=0
 
-            #update the time of request for tem and humidity values            
-            newtime = time.strftime('%m-%d-%y  %H:%M:%S')
-            self.ui.timeDisplay.setText(newtime)
-            
-            #update database
-            crsr.execute("INSERT INTO dht_data values(?,?,?,?,?,?,?,?,?,?)",(newtime,temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4))
-            connection.commit()
+                #update the time of request for tem and humidity values            
+                newtime = time.strftime('%m-%d-%y  %H:%M:%S')
+                self.ui.timeDisplay.setText(newtime)
+                
+                #update database
+                crsr.execute("INSERT INTO dht_data values(?,?,?,?,?,?,?,?,?,?)",(newtime,temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4))
+                connection.commit()
 
 
         #function to create a graph of last 10 temperature values

@@ -1,13 +1,19 @@
+#Created by- Preshit Harlikar
+#Date - 10/21/2018
+
 import tornado.httpserver
 import tornado.websocket
 import tornado.ioloop
 import tornado.web
 import socket
-import sqlite3 
+import sqlite3
+from PyQt5 import QtCore
+
  
 class WSHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print('New Connection Opened')
+
 
     def on_message(self, message):
         
@@ -19,11 +25,15 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         
         crsr.execute("SELECT * FROM dht_data ORDER BY Timestamp DESC LIMIT 1")
         data = crsr.fetchone()
-        
+                
         Time,Temp,Unit,AvgTemp,HighTemp,LowTemp,Hum,AvgHum,HighHum,LowHum = data
         print('Message Received:  %s' % message)
 
-        if (message == "Get Current Temperature"):
+        if (Temp == 0):
+            print('Sensor Disconnected')
+            self.write_message("Sensor Disconnected")
+        
+        elif (message == "Get Current Temperature"):
             # Reverse Message and send it back
             print('Sending Current Temperature')
             #print(repr(Time))
@@ -72,8 +82,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
         return True
  
+#Tornado application 
 application = tornado.web.Application([
     (r'/ws', WSHandler),
+    (r"/(graph.jpg)",tornado.web.StaticFileHandler,{'path':'./'})
 ])
  
  
