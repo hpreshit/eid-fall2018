@@ -19,22 +19,36 @@
          git clone https://github.com/adafruit/Adafruit_Python_DHT.git && cd Adafruit_Python_DHT
          sudo python3 setup.py install
    
+   ### Install Tornado
+         pip install tornado
+         
    ### Clone this repository and run the program
-         git clone https://github.com/hpreshit/eid-fall2018 && cd Project\ 1/
+         git clone https://github.com/hpreshit/eid-fall2018 && cd DHTsensorUI
+   
+   ### To run local QT
          python3 SensorMain.py
+   
+   ### To start Websocket server
+         python3 server.py
+   
+   ### To run the client html
+         cd client
+         open client.html
  
    
    ## Project Work
    ### The DHT22 temperature and humidity sensor is interfaced with the Raspberry Pi and an Interactive GUI is created to display the Temperature and Humidity values. The GUI has the basic functionalities like:
    #### 1. Requesting current values from of the temperature and humidity from the DHT22
    #### 2. Display the values of temperature and humidity as well as the time of request
-   #### 3. Generate an error message if the sensor is inactive or disconnected
-  
+   #### 3. A button on the RPi3 server display should allow changing units to degrees C or F
+   #### 4. Take temp/humidity readings every 5 seconds and display in a QT UI 8 values: the last, average, highest, and lowest readings for both temp and humidity with time/date of each reading 
+   #### 5. The sensor RPi3 runs a web server to allow the remote RPi3 client to request and display data using WebSockets as the communication protocol between the sensor RPi3 and the remote display RPi3 client
+   #### 6. The remote client display developed as an HTML web page that will in a browser on the remote RPi3 and talk to the sensor RPi3’s webserver to request data for display
+   #### 7. Indicate any error conditions in the connection
+   #### 8. Provide eight buttons to request, read from the server.
+   
    ## Project Additions
    ### The additional features added to the project are:
-   #### 1. Retrieve temperature and humidity values using a timer
-   #### 2. Continuously calculate and display the average temperature & humidity values
-   #### 3. Switch between Celcius and Fahrenheit units of temperature
-   #### 4. Allow user to set an alarm for an input high temperature and humidity value using a dial
-   #### 5. Display graph of last 10 temperature and humidity values
+   #### 1. Login Screen for client Pi
+   #### 2. Display Graph of Temperature and Humidity on Client 
    
