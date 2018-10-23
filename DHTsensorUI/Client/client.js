@@ -1,3 +1,6 @@
+// @author - Preshit Harlikar, Smitesh Modak
+// @reference - https://os.mbed.com/cookbook/Websockets-Server
+
   // log function
   log = function(data){
     $("div#terminal").prepend("</br>" +data);
@@ -6,6 +9,7 @@
 
   $(document).ready(function () {
 
+    //Initially only display Security Details section
     $("div#value_details").hide();
     $("div#security_details").show();
     $("div#connection_details").show();
@@ -27,17 +31,21 @@
     //   alert("Wrong Username and Password");
     // });
 
+    //Handler for open connection button
     $("#open").click(function(evt) {
       evt.preventDefault();
 
+      //defining host, port and uri
       var host = $("#host").val();
       var port = 8888;
       var uri = "/ws";
 
-      var a="pi";
-      var b="pi";
+      //Hardcoded username and password
+      var user_name="pi";
+      var password="rpi@ps";
 
-      if (($("#usernameVal").val()==a) && ($("#passwordVal").val()== b))
+      //open connection when user entered username and password matches
+      if (($("#usernameVal").val()==user_name) && ($("#passwordVal").val()== password))
       {
           // create websocket instance
           ws = new WebSocket("ws://" + host + ":" + port + uri);
@@ -60,7 +68,7 @@
 
       // Handle incoming websocket message callback
       ws.onmessage = function(evt) {
-       var str_array = evt.data.split(',');
+       var str_array = evt.data.split(',');                   //parsing incoming data according to format
        if (str_array[0]=="Get Current Temperature")
           {
               $("#curTempVal").val(str_array[1].toString());
@@ -163,15 +171,7 @@
       };
     });
 
-
-    // Send websocket message function
-    $("#send").click(function(evt) {
-        log("Sending Message: "+$("#message").val());
-        ws.send($("#message").val());
-
-    });
-
-
+    //Send functions to request server for specific values
     $("#curTemp").click(function(evt) {
       ws.send($("#curTemp").val());
      });
@@ -204,6 +204,7 @@
       ws.send($("#lowHum").val());
     });
 
+    // Handler for close connection button
     $("#close").click(function(evt) {
       evt.preventDefault();
       ws.close();
@@ -230,13 +231,15 @@
       $("div#value_details").hide();
 
     });
-    
+
+    // Handler for plot graph button
     $("#plot").click(function(evt) {
       if(confirm("This will open a PopUp")){
         window.location = "http://10.0.0.215:8888/graph.jpg"
       }
     });
 
+    // Handler for clear fields button
     $("#clear").click(function(evt) {
       $("#curTempVal").val('');
       $("#curTempTS").val('');

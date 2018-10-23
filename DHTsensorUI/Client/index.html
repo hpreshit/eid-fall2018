@@ -1,3 +1,6 @@
+<!-- @author - Preshit Harlikar, Smitesh Modak -->
+<!-- @reference - https://os.mbed.com/cookbook/Websockets-Server -->
+
 <!doctype html>
 <html>
   <head>
@@ -21,6 +24,7 @@
 
   <body>
     <h1>Project 2: WebSockets Client</h1>
+    <!-- Security details section which contains user interface for user name and password  -->
     <div id="security_details">
       <br /><label for="Username">Username:</label>
       <input type="text" id="usernameVal" value="" style="background:rgb(240, 240, 240);"/><br /><br />
@@ -28,20 +32,18 @@
       <input type="text" id="passwordVal" value="" style="background:rgb(240, 240, 240);"/><br /><br />
       <!-- <input type="submit" id="signIn" value="Sign In"/><br /> -->
 
+    <!-- Connection details section which contains user interface to enter Host address  -->
     <div>
     <div id="connection_details">
       <label for="host">Host:</label>
       <input type="text" id="host" value="" style="background:rgb(240, 240, 240);"/><br /><br />
-      <!--
-      <label for="port">Port:</label>
-      <input type="text" id="port" value="" style="background:rgb(240, 240, 240);"/><br />
-      <label for="uri">uri:</label>
-      //<input type="text" id="uri" value="/ws" style="background:rgb(240, 240, 240);"/><br />
-      -->
       <input type="submit" id="open" value="Open"/>
       <div class="divider"/>
       <input type="submit" id="close" value="Close"/><br />
 
+    <!-- Value details section which contains user interface to get Current, Average, Highest and Lowest
+     temperature and Humidity Values along with their timestamps. It also includes additional functionalities such as Plotting
+     Real-time graph of temperature and humidity values and to clear all value fields-->
     </div>
     <div id="value_details">
       <br /><label for="curTempVal">Current Temperature:</label>
