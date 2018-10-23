@@ -1,10 +1,10 @@
-   # Project 1 : Local QT-based UI
+   # Project 2 : Remote Websocket/Web Page UI
    
-   ### Created By: Preshit Harlikar
+   ### Created By: Preshit Harlikar and Smitesh Modak
   
   ![GitHub Logo](SensorUI.JPG)
   
-   #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT.
+   #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT. Create local database using SQL. Client Server communication using Websockets. A HTML webpage to remote display the data from server. 
    
    ## Installation Guide
    ### To run this project on Raspeberry Pi, you need to install Qt and PyQt using,
