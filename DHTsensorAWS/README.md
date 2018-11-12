@@ -20,6 +20,8 @@
          wget -qO- https://deb.nodesource.com/setup_10.x | sudo -E bash -
          sudo apt-get install -y nodejs
 
+   ### Install boto3
+         pip install boto3
    
    ### Now clone the pre-built Adafruit library for DHT22
          git clone https://github.com/adafruit/Adafruit_Python_DHT.git && cd Adafruit_Python_DHT
@@ -34,9 +36,10 @@
    ### To run the client QT
          cd client
          python3 SensorMain.py
-   
-   ### Install boto3
-         pip install boto3
+         
+   ### AWS Lambda function
+         cd client
+         lambda.js
     
    ## Project Work
    ### The DHT22 temperature and humidity sensor is interfaced with the Raspberry Pi and an Interactive GUI is created to display the Temperature and Humidity values. The GUI has the basic functionalities like:
