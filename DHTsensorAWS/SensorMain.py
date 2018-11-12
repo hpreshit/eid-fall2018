@@ -18,7 +18,10 @@ class Main(QDialog):
         #integrating the UI
         self.ui = Ui_SensorInterface()      
         self.ui.setupUi(self)
+        
+        #MQTT setup
         self.mqttSetup()
+        
         #global variables
         global unit, count, tempAvg, humAvg, samples, tempArr, humArr, timerflag, tempLimit, humLimit, tempHigh, tempLow, humHigh, humLow, temp, connection, crsr
         unit = 1
@@ -48,6 +51,7 @@ class Main(QDialog):
         self.ui.humDial.valueChanged.connect(self.setHumLimit)
         self.ui.cleardatabaseButton.clicked.connect(self.clearDB)
         
+        #function to setup MQTT using REST API and private and root keys
     def mqttSetup(self):
         self.myAWSIoTMQTTClient = AWSIoTMQTTClient("RaspberryPi")
         self.myAWSIoTMQTTClient.configureEndpoint("a1mtqpdqvd0l8h-ats.iot.us-east-1.amazonaws.com", 8883)
@@ -239,6 +243,7 @@ class Main(QDialog):
         self.ui.temperatureAvgDisplay.display("")
         self.ui.humidityAvgDisplay.display("")
         
+        #function to clear the local database
     def clearDB(self):
         global connection, crsr
         crsr.execute("DROP TABLE IF EXISTS dht_data")
