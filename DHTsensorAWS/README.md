@@ -33,7 +33,7 @@
    
    ### To run the client QT
          cd client
-         python client.py
+         python3 SensorMain.py
    
    ### Install boto3
          pip install boto3
