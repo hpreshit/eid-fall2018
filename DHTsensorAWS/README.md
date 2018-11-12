@@ -4,7 +4,7 @@
   
   ![GitHub Logo](SensorUI.JPG)
   
-   #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT. Create local database using SQL. Client Server communication using Websockets. A HTML webpage to remote display the data from server. 
+   #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT. Create local database using SQL. Client Server communication using MQTT and AWS as Broker. A QT interface to remote display the data from server. 
    
    ## Installation Guide
    ### To run this project on Raspeberry Pi, you need to install Qt and PyQt using,
@@ -24,22 +24,16 @@
    ### Now clone the pre-built Adafruit library for DHT22
          git clone https://github.com/adafruit/Adafruit_Python_DHT.git && cd Adafruit_Python_DHT
          sudo python3 setup.py install
-   
-   ### Install Tornado
-         pip install tornado
          
    ### Clone this repository and run the program
-         git clone https://github.com/hpreshit/eid-fall2018 && cd DHTsensorUI
+         git clone https://github.com/hpreshit/eid-fall2018 && cd DHTsensorAWS
    
    ### To run local QT
          python3 SensorMain.py
    
-   ### To start Websocket server
-         python3 server.py
-   
-   ### To run the client html
+   ### To run the client QT
          cd client
-         open client.html
+         python client.py
    
    ### Install boto3
          pip install boto3
