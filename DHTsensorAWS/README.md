@@ -42,26 +42,19 @@
    ### The DHT22 temperature and humidity sensor is interfaced with the Raspberry Pi and an Interactive GUI is created to display the Temperature and Humidity values. The GUI has the basic functionalities like:
    #### 1. Requesting current values from of the temperature and humidity from the DHT22
    #### 2. Display the values of temperature and humidity as well as the time of request
-   #### 3. A button on the RPi3 server display should allow changing units to degrees C or F
+   #### 3. A button on the RPi3 server display allows changing units to degrees C or F
    #### 4. Take temp/humidity readings every 5 seconds and display in a QT UI 8 values: the last, average, highest, and lowest readings for both temp and humidity with time/date of each reading 
-   #### 5. The sensor RPi3 runs a web server to allow the remote RPi3 client to request and display data using WebSockets as the communication protocol between the sensor RPi3 and the remote display RPi3 client
-   #### 6. The remote client display developed as an HTML web page that will in a browser on the remote RPi3 and talk to the sensor RPi3’s webserver to request data for display
-   #### 7. Indicate any error conditions in the connection
-   #### 8. Provide eight buttons to request, read from the server.
-   
-   ## Project Additions
-   ### The additional features added to the project are:
-   #### 1. Login Screen for client Pi
-   #### 2. Display Graph of Temperature and Humidity on Client 
+   #### 5. The sensor RPi3 sends the data to AWS IoT via MQTT which triggers a lambda event.
+   #### 6. The Lambda function calculates the average, min and max for both temperature and humidity and adds the data to SQS queue.
+   #### 7. The QT on client RPi3 has a button to request last 30 values from the queue. 
+   #### 8. The client RPi3 displays a graph of all the 8 values with start and stop timestamps.
+   #### 9. A button on the RPi3 client display allows changing units to degrees C or F
    
    
    ## References
    #### 1. https://docs.aws.amazon.com/index.html#lang/en_us
-   
    #### 2. https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
-   
    #### 3. https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
-   
    #### 4. https://lobster1234.github.io/2017/06/25/boto-and-sqs/
    
    
