@@ -40,8 +40,10 @@
    ### To run the client html
          cd client
          open client.html
- 
    
+   ### Install boto3
+         pip install boto3
+    
    ## Project Work
    ### The DHT22 temperature and humidity sensor is interfaced with the Raspberry Pi and an Interactive GUI is created to display the Temperature and Humidity values. The GUI has the basic functionalities like:
    #### 1. Requesting current values from of the temperature and humidity from the DHT22
