@@ -153,6 +153,7 @@ class Main(QDialog):
             crsr.execute("INSERT INTO dht_data values(?,?,?,?,?,?,?,?,?,?)",(newtime,temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4))
             connection.commit()
             
+            #publish data to AWS IOT
             if timerflag == 1:
                 payload ='"timestamp": "{}", "temperature": "{}", "humidity": "{}"'.format(newtime,tempA,hum1)
                 payload = '{' +payload+ '}'
