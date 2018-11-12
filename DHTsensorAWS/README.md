@@ -1,4 +1,4 @@
-   # Project 2 : Remote Websocket/Web Page UI
+   # MQTT/AWS Lambda with Raspberry Pi
    
    ### Created By: Preshit Harlikar and Smitesh Modak
   
@@ -60,9 +60,4 @@
    
    
    ## References
-   #### 1. https://github.com/jaredwolff/nodejs-websocket-example
-   #### 2. https://os.mbed.com/cookbook/Websockets-Server
-   #### 3. https://www.merixstudio.com/blog/websockets-how-it-works-and-how-use-it/
-   #### 4. https://www.jaredwolff.com/blog/raspberry-pi-getting-interactive-with-your-server-using-websockets/
-   #### 5. https://github.com/jaredwolff/nodejs-websocket-example/blob/master/public/index.html
-   #### 6. https://www.w3schools.com/html/
+   #### 1. https://docs.aws.amazon.com/index.html#lang/en_us
