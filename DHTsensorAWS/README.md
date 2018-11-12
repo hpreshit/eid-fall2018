@@ -61,3 +61,12 @@
    
    ## References
    #### 1. https://docs.aws.amazon.com/index.html#lang/en_us
+   
+   #### 2. https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
+   
+   #### 3. https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
+   
+   #### 4. https://lobster1234.github.io/2017/06/25/boto-and-sqs/
+   
+   
+   
