@@ -160,7 +160,7 @@
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>340</y>
+     <y>410</y>
      <width>261</width>
      <height>51</height>
     </rect>
@@ -184,7 +184,7 @@
    <property name="geometry">
     <rect>
      <x>525</x>
-     <y>240</y>
+     <y>300</y>
      <width>91</width>
      <height>91</height>
     </rect>
@@ -260,13 +260,13 @@
     <string>F</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="timerButton">
+  <widget class="QPushButton" name="profileButton">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>520</x>
      <y>760</y>
-     <width>85</width>
-     <height>85</height>
+     <width>101</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -277,12 +277,12 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>Images/timerbutton.png</normaloff>Images/timerbutton.png</iconset>
+     <normaloff>Images/profiling.png</normaloff>Images/profiling.png</iconset>
    </property>
    <property name="iconSize">
     <size>
-     <width>80</width>
-     <height>80</height>
+     <width>90</width>
+     <height>90</height>
     </size>
    </property>
    <property name="flat">
@@ -552,7 +552,7 @@ border-color: rgb(255, 255, 255);</string>
   <widget class="QLineEdit" name="timerStatus">
    <property name="geometry">
     <rect>
-     <x>615</x>
+     <x>620</x>
      <y>760</y>
      <width>16</width>
      <height>16</height>
@@ -798,30 +798,11 @@ border-color: rgb(255, 255, 255);</string>
     <pixmap>Images/humidityAvg.png</pixmap>
    </property>
   </widget>
-  <widget class="QPushButton" name="cleardatabaseButton">
-   <property name="geometry">
-    <rect>
-     <x>505</x>
-     <y>410</y>
-     <width>131</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Clear Database</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="graphButton">
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>590</y>
+     <y>570</y>
      <width>101</width>
      <height>81</height>
     </rect>
