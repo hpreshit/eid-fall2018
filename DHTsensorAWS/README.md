@@ -59,6 +59,9 @@
    #### 2. https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
    #### 3. https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
    #### 4. https://lobster1234.github.io/2017/06/25/boto-and-sqs/
+   #### 5. http://www.steves-internet-guide.com/python-mqtt-publish-subscribe/
+   #### 6. https://pypi.org/project/websocket-client/
+   #### 7. https://pythonspot.com/matplotlib-bar-chart/
    
    
    
