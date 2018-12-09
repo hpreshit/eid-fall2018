@@ -9,12 +9,25 @@ from PyQt5.QtWidgets import QDialog, QApplication
 
 from SensorUI import Ui_SensorInterface
 
+import matplotlib.pyplot as plt; plt.rcdefaults()
+import numpy as np
 import matplotlib.pyplot as plt
+
+import boto3
+
+from config_aws import *
+
+import paho.mqtt.client as paho
+
+from websocket import create_connection
 
 import time
 
-import boto3
-from config_aws import *
+import asyncio
+
+from aiocoap import *
+
+import array
 
 class Main(QDialog):
     def __init__(self):
@@ -22,6 +35,11 @@ class Main(QDialog):
         #integrating the UI
         self.ui = Ui_SensorInterface()
         self.ui.setupUi(self)
+        
+        global host,port,uri
+        host = "10.0.0.215"
+        port = "8888";
+        uri = "/ws";
 
         #global variables
         global unit, count, tempAvg, humAvg, samples, tempArr, humArr, timerflag, tempLimit, humLimit, tempHigh, tempLow, humHigh, humLow, temp, connection, crsr
@@ -42,11 +60,12 @@ class Main(QDialog):
         self.ui.refreshButton.clicked.connect(self.refresh)
         self.ui.celciusButton.clicked.connect(self.celciusTemp)
         self.ui.fahrenheitButton.clicked.connect(self.fahrenheitTemp)
-        self.ui.timerButton.clicked.connect(self.timerStartStop)
+##        self.ui.timerButton.clicked.connect(self.timerStartStop)
         self.ui.resetButton.clicked.connect(self.resetAvg)
         self.ui.graphButton.clicked.connect(self.graphTempHum)
         self.ui.tempDial.valueChanged.connect(self.setTempLimit)
         self.ui.humDial.valueChanged.connect(self.setHumLimit)
+        self.ui.profileButton.clicked.connect(self.profile)
 
         global sqs, aws_queue_url
         
@@ -79,8 +98,9 @@ class Main(QDialog):
 
     #function to create a graph of last 10 temperature values
     def graphTempHum(self):
-        global tempArr, humArr, temp_value,temp_avg,temp_min,temp_max,hum_value,hum_avg,hum_min,hum_max,time_stamp
-        
+        global tempArr, humArr, temp_value,temp_avg,temp_min,temp_max,hum_value,hum_avg,hum_min,hum_max,time_stamp,samples
+        global packetProf  #message packet  
+        packetProf=[]
         temp_value=list()
         temp_avg=list()
         temp_min=list()
@@ -101,6 +121,7 @@ class Main(QDialog):
                         # process the messages
                         print(message['Body'])
                         packet=message['Body']
+                        packetProf.append(packet)
                         rec_msg=packet.split(',')
                         time_stamp.append(rec_msg[0])
                         temp_value.append(rec_msg[1])
@@ -213,6 +234,102 @@ class Main(QDialog):
         tempAvg, tempHum, count = 0, 0, 0
         self.ui.temperatureAvgDisplay.display("")
         self.ui.humidityAvgDisplay.display("")
+        
+    def profile(self):
+        self.mqtt_profile_wrapper()
+        self.wbs_profile_wrapper()
+        asyncio.get_event_loop().run_until_complete(self.coap_profile_wrapper())
+        self.plot_profile()
+    
+    def mqtt_profile_wrapper(self):
+        global packetProf,samples
+        broker="iot.eclipse.org"
+        #define callback
+        def on_message(client, userdata, message):
+            global mqtt_elapsed_time
+            stop_time=time.time()
+##            print("received message =",str(message.payload.decode("utf-8")))
+            mqtt_elapsed_time=stop_time-start_time
+            print("MQTT Profiled time for",len(samples),"messages =",float(mqtt_elapsed_time*1000),"msecs")
+            client.disconnect() #disconnect
+            client.loop_stop()
+            
+        client= paho.Client("client-001") #create client object client1.on_publish = on_publish #assign function to callback client1.connect(broker,port) #establish connection client1.publish("house/bulb1","on")
+        ######Bind function to callback
+        client.on_message=on_message
+        #####
+        print("connecting to broker ",broker)
+        client.connect(broker)#connect
+        print("publishing ")
+        start_time = time.time()
+        client.publish("client/profile",''.join(str(packetProf)))#publish
+##        print("subscribing ")
+        client.subscribe("server/profile")#subscribe
+        client.loop_forever() #start loop to process received messages
+        
+    def wbs_profile_wrapper(self):
+        global host,port,uri,packetProf,samples,ws_elapsed_time
+        ws = create_connection("ws://" + host + ":" + port + uri)
+##        print("Sending 'Hello, World'...")
+        start_time=time.time()
+        ws.send(''.join(str(packetProf)))
+##        print("Sent")
+##        print("Receiving...")
+        result =  ws.recv()
+##        print("Received '%s'" % result)
+        stop_time = time.time()
+        ws_elapsed_time=stop_time-start_time
+        print("WebSocket Profiled time for",len(samples),"messages =",float(ws_elapsed_time*1000),"msecs")
+        ws.close()
+        
+    async def coap_profile_wrapper(self):
+        global packetProf,samples, coap_elapsed_time
+        """Perform a single PUT request to localhost on the default port, URI
+        "/other/block". The request is sent 2 seconds after initialization.
+
+        The payload is bigger than 1kB, and thus sent as several blocks."""
+
+        context = await Context.create_client_context()
+
+        await asyncio.sleep(2)
+
+        payload = bytes(''.join(str(packetProf)), 'utf-8')
+        start_time = time.time()
+        request = Message(code=PUT, payload=payload, uri="coap://10.0.0.215/other/block")
+
+        response = await context.request(request).response
+
+        #print('Result: %s\n%r'%(response.code, response.payload))
+        
+        protocol = await Context.create_client_context()
+
+        request_receive = Message(code=GET, uri='coap://10.0.0.215/other/block')
+
+        try:
+            response = await protocol.request(request_receive).response
+        except Exception as e:
+            print('Failed to fetch resource:')
+            print(e)
+        else:
+            stop_time = time.time()
+            coap_elapsed_time = stop_time - start_time
+            #print('Result: %s\n%r'%(response.code, response.payload))
+            print("CoAP Profiled time for",len(samples),"messages =",float(coap_elapsed_time*1000),"msecs")
+    
+    def plot_profile(self):
+        global mqtt_elapsed_time,ws_elapsed_time,coap_elapsed_time
+        objects = ('MQTT', 'WebSocket', 'CoAP')
+        y_pos = np.arange(len(objects))
+        performance = [mqtt_elapsed_time,ws_elapsed_time,coap_elapsed_time]
+ 
+        
+        plt.bar(y_pos, performance, align='center', alpha=0.5,label='')
+        plt.xticks(y_pos, objects)
+        plt.xlabel('Protocols')
+        plt.ylabel('milliseconds')
+        plt.title('IoT Protocol Profiling')
+        plt.legend()
+        plt.show()
 
 if __name__ == "__main__":
     import sys
