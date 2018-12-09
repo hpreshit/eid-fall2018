@@ -249,8 +249,8 @@ class Main(QDialog):
             global mqtt_elapsed_time
             stop_time=time.time()
 ##            print("received message =",str(message.payload.decode("utf-8")))
-            mqtt_elapsed_time=stop_time-start_time
-            print("MQTT Profiled time for",len(samples),"messages =",float(mqtt_elapsed_time*1000),"msecs")
+            mqtt_elapsed_time=float((stop_time-start_time) * 1000)
+            print("MQTT Profiled time for",len(samples),"messages =",mqtt_elapsed_time,"msecs")
             client.disconnect() #disconnect
             client.loop_stop()
             
@@ -278,8 +278,8 @@ class Main(QDialog):
         result =  ws.recv()
 ##        print("Received '%s'" % result)
         stop_time = time.time()
-        ws_elapsed_time=stop_time-start_time
-        print("WebSocket Profiled time for",len(samples),"messages =",float(ws_elapsed_time*1000),"msecs")
+        ws_elapsed_time=float((stop_time-start_time) * 1000)
+        print("WebSocket Profiled time for",len(samples),"messages =",ws_elapsed_time,"msecs")
         ws.close()
         
     async def coap_profile_wrapper(self):
@@ -312,9 +312,9 @@ class Main(QDialog):
             print(e)
         else:
             stop_time = time.time()
-            coap_elapsed_time = stop_time - start_time
+            coap_elapsed_time = float((stop_time-start_time) * 1000)
             #print('Result: %s\n%r'%(response.code, response.payload))
-            print("CoAP Profiled time for",len(samples),"messages =",float(coap_elapsed_time*1000),"msecs")
+            print("CoAP Profiled time for",len(samples),"messages =",coap_elapsed_time,"msecs")
     
     def plot_profile(self):
         global mqtt_elapsed_time,ws_elapsed_time,coap_elapsed_time
