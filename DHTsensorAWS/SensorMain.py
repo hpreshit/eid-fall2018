@@ -89,7 +89,7 @@ class Main(QDialog):
             
             temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4time = 0,0,0,0,0,0,0,0,0
             #update database
-            crsr.execute("INSERT INTO dht_data values(?,?,?,?,?,?,?,?,?,?)",(newtime,temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4time))
+            crsr.execute("INSERT INTO dht_data values(?,?,?,?,?,?,?,?,?,?)",(newtime,temp1,tempUnit,temp2,temp3,temp4,hum1,hum2,hum3,hum4))
             connection.commit()
 
         else:
