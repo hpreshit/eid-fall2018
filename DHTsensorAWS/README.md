@@ -1,10 +1,10 @@
-   # MQTT/AWS Lambda with Raspberry Pi
+   # MQTT/AWS Lambda with Raspberry Pi and Protocol Comparison
    
    ### Created By: Preshit Harlikar and Smitesh Modak
   
   ![GitHub Logo](SensorUI.JPG)
   
-   #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT. Create local database using SQL. Client Server communication using MQTT and AWS as Broker. A QT interface to remote display the data from server and graph of retrieved data. 
+   #### This project demonstrates development of a rapid prototype of a stand-alone temperature monitoring device with a local user interface. The temperature and humidity sensor used is DHT22 which is interfaced with Raspberry Pi. A User Interface is created for the temperature and humidity sensor using PyQT. Create local database using SQL. Client Server communication using MQTT and AWS as Broker. A QT interface to remote display the data from server and graph of retrieved data. A button on client QT start profiling of MQTT, Websockets and CoAP. The data received from the server are sent to the server and received back and the roundtrip time is profiled for each protocol.
    
    ## Installation Guide
    ### To run this project on Raspeberry Pi, you need to install Qt and PyQt using,
@@ -22,7 +22,15 @@
 
    ### Install boto3
          pip install boto3
+         
+   ### Install websocket client
+         pip3 install websocket-client
    
+   ### Install paho-MQTT
+         pip3 install paho-mqtt
+  
+   ### Install 
+  
    ### Now clone the pre-built Adafruit library for DHT22
          git clone https://github.com/adafruit/Adafruit_Python_DHT.git && cd Adafruit_Python_DHT
          sudo python3 setup.py install
@@ -32,6 +40,9 @@
    
    ### To run local QT
          python3 SensorMain.py
+   
+   ### To run server for three protocols
+         python3 server.py
    
    ### To run the client QT
          cd client
@@ -52,7 +63,8 @@
    #### 7. The QT on client RPi3 has a button to request last 30 values from the queue. 
    #### 8. The client RPi3 displays a graph of all the 8 values with start and stop timestamps.
    #### 9. A button on the RPi3 client display allows changing units to degrees C or F
-   
+   #### 10. A button on client QT starts profiling of roundtrip time for three protocols: MQTT, Websockets and CoAP
+   #### 11. The results are displayed in textual format as well as a graphical comparison of roundtrip time of three protocols is displayed. 
    
    ## References
    #### 1. https://docs.aws.amazon.com/index.html#lang/en_us
